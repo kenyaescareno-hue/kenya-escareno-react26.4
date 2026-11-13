@@ -27,6 +27,16 @@ function App() {
     setTodoList(updatedTodoList);
   };
 
+  const updateTodo = (editedTodo) => {
+    const updatedTodos = todoList.map(todo =>
+      todo.id === editedTodo.id
+        ? { ...editedTodo }
+        : todo
+    );
+
+    setTodoList(updatedTodos);
+  };
+
   return (
     <div>
       <h1>Todo App</h1>
@@ -34,6 +44,7 @@ function App() {
       <TodoList
         todoList={todoList}
         onCompleteTodo={completeTodo}
+        onUpdateTodo={updateTodo}
       />
     </div>
   );
