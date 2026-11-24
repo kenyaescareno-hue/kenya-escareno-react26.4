@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import TodoForm from './TodoForm.jsx';
 import TodoList from './TodoList/TodoList.jsx';
@@ -17,6 +18,11 @@ function TodosPage({ token }) {
           },
         });
 
+        if (response.status === 401) {
+          setError('Unauthorized. Please log in again.');
+          return;
+        }
+
         if (!response.ok) {
           throw new Error('Failed to load todos.');
         }
@@ -30,7 +36,9 @@ function TodosPage({ token }) {
       }
     };
 
-    fetchTodos();
+    if (token) {
+      fetchTodos();
+    }
   }, [token]);
 
   const addTodo = async (todoTitle) => {
@@ -50,10 +58,10 @@ function TodosPage({ token }) {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': token,
         },
-	body: JSON.stringify({
-		title: todoTitle,
-		 isCompleted: false,
-}),
+        body: JSON.stringify({
+          title: todoTitle,
+          isCompleted: false,
+        }),
       });
 
       if (!response.ok) {
