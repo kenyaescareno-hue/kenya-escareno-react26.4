@@ -5,16 +5,19 @@ function TextInputWithLabel({
   onChange,
   ref,
   value,
+  type = 'text',
+  required = false,
 }) {
   return (
     <>
       <label htmlFor={elementId}>{labelText}</label>
       <input
-        type="text"
+        type={type}
         id={elementId}
         ref={ref}
         value={value}
         onChange={onChange}
+        required={required}
       />
     </>
   );
